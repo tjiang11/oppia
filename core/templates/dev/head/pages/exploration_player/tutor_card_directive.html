@@ -7,8 +7,13 @@
       <img class="conversation-skin-oppia-avatar"
            ng-src="<[OPPIA_AVATAR_IMAGE_URL]>" alt="">
       <div class="conversation-skin-tutor-card-top-content protractor-test-conversation-content"
-           angular-html-bind="activeCard.contentHtml"
            focus-on="<[getContentFocusLabel($index)]>">
+        <span angular-html-bind="activeCard.contentHtml">
+        </span>
+        <span class="audio-controls">
+          <img class="play-audio-button"
+          ng-src="<[PLAY_AUDIO_BUTTON_IMAGE_URL]>">
+        </span>
       </div>
     </div>
 
@@ -236,6 +241,19 @@
   .conversation-skin-inline-interaction .conversation-skin-user-avatar {
     left: -20px;
     top: 14px;
+  }
+
+  .play-audio-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .play-audio-button:hover {
+    cursor: pointer
+  }
+
+  .audio-controls {
+    float: right;
   }
 
   @media screen and (max-width: 959px) {
