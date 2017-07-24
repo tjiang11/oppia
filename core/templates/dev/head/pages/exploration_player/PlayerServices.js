@@ -241,7 +241,7 @@ oppia.factory('oppiaPlayerService', [
       },
       getStateContentAudioTranslation: function(stateName, languageCode) {
         return exploration.getAudioTranslation(stateName, languageCode);
-      }.
+      },
       getInteractionHtml: function(stateName, labelForFocusTarget) {
         var interactionId = exploration.getInteractionId(stateName);
         if (!interactionId) {

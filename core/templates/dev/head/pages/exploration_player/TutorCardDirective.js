@@ -160,8 +160,11 @@ oppia.directive('tutorCard', [
           $scope.playAudioTranslation = function() {
             // TODO(tjiang11): Change from on-demand loading to pre-loading.
 
+            var currentAudioLanguageCode =
+              AudioManagerService.getCurrentAudioLanguageCode();
+
             var filename = oppiaPlayerService.getStateContentAudioTranslationFilename(
-              $scope.activeCard.stateName, currentLanguageCode);
+              $scope.activeCard.stateName, currentAudioLanguageCode);
 
             AudioPlayerService.load(filename).then(function() {
               AudioPlayerService.play();

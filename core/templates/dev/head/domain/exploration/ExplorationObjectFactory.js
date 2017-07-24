@@ -126,6 +126,14 @@ oppia.factory('ExplorationObjectFactory', [
       return this.getState(stateName).content.getAudioTranslation(language_code);
     };
 
+    Exploration.prototype.getLanguageCode = function() {
+      return this.languageCode;
+    };
+
+    Exploration.prototype.getAllAudioLanguageCodes = function() {
+      return this.states.getAllAudioLanguageCodes();
+    };
+
     // Static class methods. Note that "this" is not available in
     // static contexts.
     Exploration.createFromBackendDict = function(explorationBackendDict) {

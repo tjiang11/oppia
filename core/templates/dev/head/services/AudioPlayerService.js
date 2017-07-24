@@ -19,6 +19,7 @@
 oppia.factory('AudioPlayerService', [
   '$q', 'ngAudio', 'AssetsBackendApiService', 'explorationContextService',
   function($q, ngAudio, AssetsBackendApiService, explorationContextService) {
+    var _currentLanguageCode = null;
     var _currentTrackFilename = null;
     var _currentTrack = null;
 
