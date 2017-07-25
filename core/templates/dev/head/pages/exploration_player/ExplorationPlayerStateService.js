@@ -54,5 +54,6 @@ oppia.factory('ExplorationPlayerStateService', [function() {
     getAllAudioLanguageCodes: function() {
       return exploration.getAllAudioLanguageCodes();
     }
+    
   };
 }]);

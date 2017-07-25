@@ -10,7 +10,8 @@
            focus-on="<[getContentFocusLabel($index)]>">
         <span angular-html-bind="activeCard.contentHtml">
         </span>
-        <span class="audio-controls">
+        <span ng-if="contentAudioTranslationAvailable()" 
+              class="audio-controls">
           <img class="play-audio-button"
           ng-src="<[PLAY_AUDIO_BUTTON_IMAGE_URL]>"
           ng-click="playAudioTranslation()">

@@ -122,6 +122,10 @@ oppia.factory('ExplorationObjectFactory', [
       return this.getState(stateName).content.getHtml();
     };
 
+    Exploration.prototype.getAudioTranslations = function(stateName) {
+      return this.getState(stateName).content.getBindableAudioTranslations();
+    };
+
     Exploration.prototype.getAudioTranslation = function(stateName, language_code) {
       return this.getState(stateName).content.getAudioTranslation(language_code);
     };

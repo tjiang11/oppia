@@ -160,17 +160,21 @@ oppia.directive('tutorCard', [
           $scope.playAudioTranslation = function() {
             // TODO(tjiang11): Change from on-demand loading to pre-loading.
 
-            console.log("play");
-
             var currentAudioLanguageCode =
               LanguageManagerService.getCurrentAudioLanguageCode();
 
-            var audioTranslation = oppiaPlayerService.getStateContentAudioTranslation(
-              $scope.activeCard.stateName, currentAudioLanguageCode);
+            var audioTranslation =
+              oppiaPlayerService.getStateContentAudioTranslation(
+                $scope.activeCard.stateName, currentAudioLanguageCode);
 
-            AudioPlayerService.load(filename).then(function() {
+            AudioPlayerService.load(audioTranslation.filename).then(function() {
               AudioPlayerService.play();
             });
+          };
+
+          $scope.contentAudioTranslationAvailable = function() {
+            return Object.keys(oppiaPlayerService.getStateContentAudioTranslations(
+              $scope.activeCard.stateName)).length > 0;
           };
 
           $scope.isCurrentCardAtEndOfTranscript = function() {

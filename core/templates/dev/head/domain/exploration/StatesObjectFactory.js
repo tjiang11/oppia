@@ -114,8 +114,8 @@ oppia.factory('StatesObjectFactory', [
       for (var stateName in this._states) {
         var audioTranslationsForState =
           this._states[stateName].content.getBindableAudioTranslations()
-        for (var audioTranslation in audioTranslationsForState) {
-          allAudioLanguageCodes.add(audioTranslation.languageCode);
+        for (var languageCode in audioTranslationsForState) {
+          allAudioLanguageCodes.add(languageCode);
         }
       }
       return [...allAudioLanguageCodes];
