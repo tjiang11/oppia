@@ -1,18 +1,17 @@
 oppia.factory('LanguageManagerService',
   ['$modal', 'ExplorationPlayerStateService',
   function($modal, ExplorationPlayerStateService) {
-    var currentAudioLanguageCode = null;
-    var allLanguageCodesInExploration = null;
+    var _currentAudioLanguageCode = null;
+    var _allLanguageCodesInExploration = null;
 
     var _init = function() {
-      allLanguageCodesInExploration =
+      _allLanguageCodesInExploration =
         ExplorationPlayerStateService.getAllAudioLanguageCodes();
-      console.log('all');
-      console.log(allLanguageCodesInExploration);
-      if (allLanguageCodesInExploration.length == 1) {
-        currentAudioLanguageCode = allLanguageCodesInExploration[0];
+      console.log(_allLanguageCodesInExploration);
+      if (_allLanguageCodesInExploration.length == 1) {
+        _currentAudioLanguageCode = _allLanguageCodesInExploration[0];
       }
-      if (allLanguageCodesInExploration.length > 1) {
+      if (_allLanguageCodesInExploration.length > 1) {
         showPickLanguageModal();
       }
     };
@@ -35,6 +34,9 @@ oppia.factory('LanguageManagerService',
     return {
       init: function() {
         _init();
+      },
+      getCurrentAudioLanguageCode() {
+        return _currentAudioLanguageCode;
       }
     };
   }
