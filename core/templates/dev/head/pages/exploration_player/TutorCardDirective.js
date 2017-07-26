@@ -125,9 +125,15 @@ oppia.directive('tutorCard', [
             UrlInterpolationService.getStaticImageUrl(
               '/avatar/oppia_avatar_100px.svg'));
 
-          $scope.PLAY_AUDIO_BUTTON_IMAGE_URL = (
+          var PLAY_AUDIO_BUTTON_IMAGE_URL = (
             UrlInterpolationService.getStaticImageUrl(
-              '/icons/speaker_icon.svg'));
+              '/icons/speaker-not-playing.svg'));
+
+          var PAUSE_AUDIO_BUTTON_IMAGE_URL = (
+            UrlInterpolationService.getStaticImageUrl(
+              '/icons/speaker-playing.svg'));
+
+          $scope.audioButtonImageUrl = PLAY_AUDIO_BUTTON_IMAGE_URL;
 
           $scope.profilePicture = UrlInterpolationService.getStaticImageUrl(
             '/avatar/user_blue_72px.png');
@@ -157,20 +163,33 @@ oppia.directive('tutorCard', [
             });
           };
 
-          $scope.playAudioTranslation = function() {
+          $scope.playPauseAudioTranslation = function() {
             // TODO(tjiang11): Change from on-demand loading to pre-loading.
 
-            var currentAudioLanguageCode =
-              LanguageManagerService.getCurrentAudioLanguageCode();
-
-            var audioTranslation =
-              oppiaPlayerService.getStateContentAudioTranslation(
-                $scope.activeCard.stateName, currentAudioLanguageCode);
-
-            AudioPlayerService.load(audioTranslation.filename).then(function() {
-              AudioPlayerService.play();
-            });
+            if (!AudioPlayerService.isPlaying()) {
+              if (AudioPlayerService.trackLoaded()) {
+                AudioPlayerService.play();
+              } else {
+                var currentAudioLanguageCode =
+                  LanguageManagerService.getCurrentAudioLanguageCode();
+                var audioTranslation =
+                  oppiaPlayerService.getStateContentAudioTranslation(
+                    $scope.activeCard.stateName, currentAudioLanguageCode);
+                AudioPlayerService.load(audioTranslation.filename).then(function() {
+                  AudioPlayerService.play();
+                });
+              }
+              //$scope.audioButtonImageUrl = PAUSE_AUDIO_BUTTON_IMAGE_URL;
+            } else {
+              AudioPlayerService.pause();
+              //$scope.audioButtonImageUrl = PLAY_AUDIO_BUTTON_IMAGE_URL;
+            }
           };
+
+          $scope.audioButtonImageUrl = function() {
+            return AudioPlayerService.isPlaying() 
+              ? PAUSE_AUDIO_BUTTON_IMAGE_URL : PLAY_AUDIO_BUTTON_IMAGE_URL;
+          }
 
           $scope.contentAudioTranslationAvailable = function() {
             return Object.keys(oppiaPlayerService.getStateContentAudioTranslations(

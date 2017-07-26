@@ -53,7 +53,6 @@ oppia.factory('UrlInterpolationService', [
      * depending on dev/prod mode.
      */
     var getCompleteUrl = function(prefix, path) {
-      console.log(GLOBALS.ASSET_DIR_PREFIX + prefix + getUrlWithSlug(path))
       return GLOBALS.ASSET_DIR_PREFIX + prefix + getUrlWithSlug(path);
     };
 
