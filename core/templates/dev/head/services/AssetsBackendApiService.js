@@ -72,6 +72,11 @@ oppia.factory('AssetsBackendApiService', [
     };
 
     var _getAudioDownloadUrl = function(explorationId, filename) {
+      if (GLOBALS.DEV_MODE) {
+        console.log('/core/tests/data/cafe.mp3');
+        return '/assets/cafe.mp3';
+      }
+
       return UrlInterpolationService.interpolateUrl(
         GCS_AUDIO_DOWNLOAD_URL_TEMPLATE, {
           exploration_id: explorationId,
