@@ -127,7 +127,7 @@ oppia.directive('tutorCard', [
 
           $scope.PLAY_AUDIO_BUTTON_IMAGE_URL = (
             UrlInterpolationService.getStaticImageUrl(
-              '/icons/play-audio-button.svg'));
+              '/icons/speaker_icon.svg'));
 
           $scope.profilePicture = UrlInterpolationService.getStaticImageUrl(
             '/avatar/user_blue_72px.png');
