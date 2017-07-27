@@ -94,8 +94,6 @@ oppia.factory('StatesObjectFactory', [
       }
     };
     States.prototype.getStateNames = function() {
-      console.log("state names");
-      console.log(Object.keys(this._states));
       return Object.keys(this._states);
     };
     States.prototype.getFinalStateNames = function() {
