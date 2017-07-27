@@ -73,7 +73,7 @@ oppia.factory('AssetsBackendApiService', [
 
     var _getAudioDownloadUrl = function(explorationId, filename) {
       if (GLOBALS.DEV_MODE) {
-        return '/assets/test  /' + filename;
+        return '/assets/test/' + filename;
       }
 
       return UrlInterpolationService.interpolateUrl(

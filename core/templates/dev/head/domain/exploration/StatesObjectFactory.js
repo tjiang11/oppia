@@ -118,7 +118,7 @@ oppia.factory('StatesObjectFactory', [
           allAudioLanguageCodes.add(languageCode);
         }
       }
-      return [...allAudioLanguageCodes];
+      return Array.from(allAudioLanguageCodes);
     };
 
     States.createFromBackendDict = function(statesBackendDict) {
