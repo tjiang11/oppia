@@ -202,8 +202,8 @@ oppia.directive('tutorCard', [
           };
 
           var isSameAudio = function() {
-            return cardIndexOfPlayingAudio 
-              == playerPositionService.getActiveCardIndex();
+            return cardIndexOfPlayingAudio == 
+              playerPositionService.getActiveCardIndex();
           };
 
           var loadAndPlayAudioTranslation = function() {
@@ -221,8 +221,8 @@ oppia.directive('tutorCard', [
             if (audioTranslation != null) {
               AudioPlayerService.load(
                   audioTranslation.filename).then(function() {
-                AudioPlayerService.play();
-              });
+                    AudioPlayerService.play();
+                  });
             }
           };
 
@@ -231,8 +231,8 @@ oppia.directive('tutorCard', [
           };
 
           $scope.playPauseButtonImageUrl = function() {
-            return AudioPlayerService.isPlaying() && isSameAudio()
-              ? PAUSE_AUDIO_BUTTON_IMAGE_URL : PLAY_AUDIO_BUTTON_IMAGE_URL;
+            return AudioPlayerService.isPlaying() && isSameAudio() ?
+              PAUSE_AUDIO_BUTTON_IMAGE_URL : PLAY_AUDIO_BUTTON_IMAGE_URL;
           };
 
           $scope.openAudioTranslationSettings = function() {
@@ -242,7 +242,7 @@ oppia.directive('tutorCard', [
 
           $scope.contentAudioTranslationAvailable = function() {
             return Object.keys(oppiaPlayerService
-                .getStateContentAudioTranslations(
+              .getStateContentAudioTranslations(
               $scope.activeCard.stateName)).length > 0;
           };
 

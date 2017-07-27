@@ -1,6 +1,26 @@
-oppia.factory('AudioTranslationManagerService',
-  ['$modal', 'ExplorationPlayerStateService', 'AudioPlayerService',
-  function($modal, ExplorationPlayerStateService, AudioPlayerService) {
+// Copyright 2017 The Oppia Authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS-IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview Service to manage the current language being
+ * used for audio translations as well as related modals.
+ */
+
+oppia.factory('AudioTranslationManagerService', [
+  '$modal', 'ExplorationPlayerStateService', 'AudioPlayerService',
+  function(
+      $modal, ExplorationPlayerStateService, AudioPlayerService) {
     var _currentAudioLanguageCode = null;
     var _allLanguageCodesInExploration = null;
 
@@ -16,8 +36,8 @@ oppia.factory('AudioTranslationManagerService',
       if (_allLanguageCodesInExploration.length == 1) {
         _currentAudioLanguageCode = _allLanguageCodesInExploration[0];
       }
-      if (_allLanguageCodesInExploration.length > 1) {
 
+      if (_allLanguageCodesInExploration.length > 1) {
         // TODO(tjiang11): Need to use a pick-language modal instead of
         // defaulting to a language.
         _currentAudioLanguageCode = _allLanguageCodesInExploration[0];
@@ -72,8 +92,7 @@ oppia.factory('AudioTranslationManagerService',
         return _showAudioTranslationSettingsModal();
       }
     };
-  }
-]);
+  }]);
 
 oppia.filter('languageDescriptions', ['$filter', function($filter) {
   return function(languageCodes) {
@@ -103,8 +122,8 @@ oppia.filter('languageDescription', function() {
 oppia.filter('languageCode', function () {
   var _getLanguageCode = function(languageDescription) {
     for (var i = 0; i < constants.SUPPORTED_AUDIO_LANGUAGES.length; i++) {
-      if (constants.SUPPORTED_AUDIO_LANGUAGES[i].text
-          === languageDescription) {
+      if (constants.SUPPORTED_AUDIO_LANGUAGES[i].text ===
+          languageDescription) {
         return constants.SUPPORTED_AUDIO_LANGUAGES[i].id;
       }
     }

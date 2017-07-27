@@ -463,7 +463,6 @@ oppia.directive('conversationSkin', [
               $rootScope.loadingMessage = '';
               $scope.hasFullyLoaded = true;
 
-
               AudioTranslationManagerService.init();
               // If the exploration is embedded, use the exploration language
               // as site language. If the exploration language is not supported
