@@ -126,8 +126,10 @@ oppia.factory('ExplorationObjectFactory', [
       return this.getState(stateName).content.getBindableAudioTranslations();
     };
 
-    Exploration.prototype.getAudioTranslation = function(stateName, language_code) {
-      return this.getState(stateName).content.getAudioTranslation(language_code);
+    Exploration.prototype.getAudioTranslation = function(
+        stateName, languageCode) {
+      return this.getState(stateName).content.getAudioTranslation(
+        languageCode);
     };
 
     Exploration.prototype.getLanguageCode = function() {
