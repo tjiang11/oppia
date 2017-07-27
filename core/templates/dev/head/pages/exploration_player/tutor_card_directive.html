@@ -12,8 +12,11 @@
         </span>
         <span ng-if="contentAudioTranslationAvailable()" 
               class="audio-controls">
-          <img class="play-audio-button"
-               ng-src="<[audioButtonImageUrl()]>"
+          <img class="audio-control-button"
+               ng-src="<[AUDIO_SETTINGS_BUTTON_IMAGE_URL]>"
+               ng-click="openAudioTranslationSettings()">
+          <img class="audio-control-button"
+               ng-src="<[playPauseButtonImageUrl()]>"
                ng-click="playPauseAudioTranslation()">
         </span>
       </div>
@@ -245,12 +248,12 @@
     top: 14px;
   }
 
-  .play-audio-button {
+  .audio-control-button {
     width: 24px;
     height: 24px;
   }
 
-  .play-audio-button:hover {
+  .audio-control-button:hover {
     cursor: pointer
   }
 

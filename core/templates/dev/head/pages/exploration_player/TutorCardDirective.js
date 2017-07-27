@@ -52,7 +52,7 @@ oppia.directive('tutorCard', [
         '$scope', '$timeout', 'oppiaPlayerService', 'HintManagerService',
         'playerPositionService', 'playerTranscriptService',
         'ExplorationPlayerStateService', 'windowDimensionsService',
-        'urlService', 'AudioPlayerService', 'LanguageManagerService',
+        'urlService', 'AudioPlayerService', 'AudioTranslationManagerService',
         'TWO_CARD_THRESHOLD_PX', 'CONTENT_FOCUS_LABEL_PREFIX',
         'CONTINUE_BUTTON_FOCUS_LABEL', 'EVENT_ACTIVE_CARD_CHANGED',
         'HINT_REQUEST_STRING_I18N_IDS', 'DELAY_FOR_HINT_FEEDBACK_MSEC',
@@ -60,7 +60,7 @@ oppia.directive('tutorCard', [
           $scope, $timeout, oppiaPlayerService, HintManagerService,
           playerPositionService, playerTranscriptService,
           ExplorationPlayerStateService, windowDimensionsService,
-          urlService, AudioPlayerService, LanguageManagerService,
+          urlService, AudioPlayerService, AudioTranslationManagerService,
           TWO_CARD_THRESHOLD_PX, CONTENT_FOCUS_LABEL_PREFIX,
           CONTINUE_BUTTON_FOCUS_LABEL, EVENT_ACTIVE_CARD_CHANGED,
           HINT_REQUEST_STRING_I18N_IDS, DELAY_FOR_HINT_FEEDBACK_MSEC) {
@@ -125,6 +125,10 @@ oppia.directive('tutorCard', [
             UrlInterpolationService.getStaticImageUrl(
               '/avatar/oppia_avatar_100px.svg'));
 
+          $scope.AUDIO_SETTINGS_BUTTON_IMAGE_URL = (
+            UrlInterpolationService.getStaticImageUrl(
+              '/icons/settings.svg'));
+
           var PLAY_AUDIO_BUTTON_IMAGE_URL = (
             UrlInterpolationService.getStaticImageUrl(
               '/icons/speaker-not-playing.svg'));
@@ -171,7 +175,7 @@ oppia.directive('tutorCard', [
                 AudioPlayerService.play();
               } else {
                 var currentAudioLanguageCode =
-                  LanguageManagerService.getCurrentAudioLanguageCode();
+                  AudioTranslationManagerService.getCurrentAudioLanguageCode();
                 var audioTranslation =
                   oppiaPlayerService.getStateContentAudioTranslation(
                     $scope.activeCard.stateName, currentAudioLanguageCode);
@@ -179,17 +183,19 @@ oppia.directive('tutorCard', [
                   AudioPlayerService.play();
                 });
               }
-              //$scope.audioButtonImageUrl = PAUSE_AUDIO_BUTTON_IMAGE_URL;
             } else {
               AudioPlayerService.pause();
-              //$scope.audioButtonImageUrl = PLAY_AUDIO_BUTTON_IMAGE_URL;
             }
           };
 
-          $scope.audioButtonImageUrl = function() {
+          $scope.playPauseButtonImageUrl = function() {
             return AudioPlayerService.isPlaying() 
               ? PAUSE_AUDIO_BUTTON_IMAGE_URL : PLAY_AUDIO_BUTTON_IMAGE_URL;
-          }
+          };
+
+          $scope.openAudioTranslationSettings = function() {
+            AudioTranslationManagerService.showAudioTranslationSettingsModal();
+          };
 
           $scope.contentAudioTranslationAvailable = function() {
             return Object.keys(oppiaPlayerService.getStateContentAudioTranslations(
