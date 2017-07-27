@@ -102,6 +102,10 @@ oppia.factory('AudioPlayerService', [
       },
       trackLoaded: function() {
         return Boolean(_currentTrack);
+      },
+      clear: function() {
+        _currentTrack = null;
+        _currentTrackFilename = null;
       }
     };
   }

@@ -13,8 +13,13 @@
         <span ng-if="contentAudioTranslationAvailable()" 
               class="audio-controls">
           <img class="audio-control-button"
+               ng-if="showExtraAudioControls"
                ng-src="<[AUDIO_SETTINGS_BUTTON_IMAGE_URL]>"
                ng-click="openAudioTranslationSettings()">
+          <img class="audio-control-button"
+               ng-if="showExtraAudioControls"
+               ng-src="<[REWIND_AUDIO_BUTTON_IMAGE_URL]>"
+               ng-click="rewindAudioFiveSec()">
           <img class="audio-control-button"
                ng-src="<[playPauseButtonImageUrl()]>"
                ng-click="playPauseAudioTranslation()">

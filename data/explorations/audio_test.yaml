@@ -16,8 +16,12 @@ states:
     content:
       audio_translations:
         en:
-          filename: 'myfile2.mp3'
+          filename: 'test_audio_2_en.mp3'
           file_size_bytes: 2
+          needs_update: false
+        hi-en:
+          filename: 'test_audio_2_hi_en.mp3'
+          file_size_bytes: 3
           needs_update: false
       html: Congratulations, you have finished!
     interaction:
@@ -37,8 +41,12 @@ states:
     content:
       audio_translations:
         en:
-          filename: 'myfile1.mp3'
+          filename: 'test_audio_1_en.mp3'
           file_size_bytes: 1
+          needs_update: false
+        hi-en:
+          filename: 'test_audio_1_hi_en.mp3'
+          file_size_bytes: 4
           needs_update: false
       html: <p>Try clicking on the speaker! After listening, click continue.</p>
     interaction:

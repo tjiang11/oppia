@@ -1,34 +1,27 @@
 oppia.factory('AudioTranslationManagerService',
-  ['$modal', 'ExplorationPlayerStateService',
-  function($modal, ExplorationPlayerStateService) {
+  ['$modal', 'ExplorationPlayerStateService', 'AudioPlayerService',
+  function($modal, ExplorationPlayerStateService, AudioPlayerService) {
     var _currentAudioLanguageCode = null;
     var _allLanguageCodesInExploration = null;
 
     var _init = function() {
       _allLanguageCodesInExploration =
         ExplorationPlayerStateService.getAllAudioLanguageCodes();
-      console.log(_allLanguageCodesInExploration);
+
+      // TODO(tjiang11): Define an order. Preferably, we'd want
+      // to promote the user's preferred languages, and promote
+      // the exploration's default language if available.
+      _allLanguageCodesInExploration.sort();
+
       if (_allLanguageCodesInExploration.length == 1) {
         _currentAudioLanguageCode = _allLanguageCodesInExploration[0];
       }
       if (_allLanguageCodesInExploration.length > 1) {
-        _showPickLanguageModal();
-      }
-    };
 
-    var _showPickLanguageModal = function() {
-      $modal.open({
-          templateUrl: 'modals/takeBreak',
-          backdrop: 'static',
-          resolve: {},
-          controller: [
-            '$scope', '$modalInstance', 'AudioTranslationManagerService',
-            function($scope, $modalInstance, AudioTranslationManagerService) {
-              $scope.okay = function() {
-                $modalInstance.close('okay');
-              };
-            }]
-        });
+        // TODO(tjiang11): Need to use a pick-language modal instead of
+        // defaulting to a language.
+        _currentAudioLanguageCode = _allLanguageCodesInExploration[0];
+      }
     };
 
     var _showAudioTranslationSettingsModal = function() {
@@ -36,21 +29,32 @@ oppia.factory('AudioTranslationManagerService',
         templateUrl: 'modals/audioTranslationSettings',
         resolve: {},
         controller: [
-          '$scope', '$modalInstance','AudioTranslationManagerService',
-          function($scope, $modalInstance, AudioTranslationManagerService) {
-            $scope.selectedLanguage = _currentAudioLanguageCode;
+          '$scope', '$filter', '$modalInstance',
+          'AudioTranslationManagerService',
+          function(
+              $scope, $filter, $modalInstance,
+              AudioTranslationManagerService) {
+            $scope.selectedLanguage =
+              $filter('languageDescription')(_currentAudioLanguageCode);
             $scope.allLanguageCodes =
               AudioTranslationManagerService
                 .getAllLanguageCodesInExploration();
+
             $scope.save = function() {
+              var selectedLanguageCode = 
+                $filter('languageCode')($scope.selectedLanguage);
               $modalInstance.close({
-                languageCode: $scope.selectedLanguage
+                languageCode: selectedLanguageCode
               });
             };
           }
         ]
       }).result.then(function(result) {
-        _currentAudioLanguageCode = result.languageCode;
+        if (_currentAudioLanguageCode !== result.languageCode) {
+          _currentAudioLanguageCode = result.languageCode;
+          AudioPlayerService.stop();
+          AudioPlayerService.clear();
+        }
       });
     };
 
@@ -71,19 +75,41 @@ oppia.factory('AudioTranslationManagerService',
   }
 ]);
 
-oppia.filter('languageDescriptions', [function() {
-  var _getLanguageDescription = function(languageCode) {
-    for (var i = 0; i < constants.ALL_LANGUAGE_CODES.length; i++) {
-      if (constants.ALL_LANGUAGE_CODES[i].code === languageCode) {
-        return constants.ALL_LANGUAGE_CODES[i].description;
-      }
-    }
-  };
+oppia.filter('languageDescriptions', ['$filter', function($filter) {
   return function(languageCodes) {
     var languageDescriptions = [];
     angular.forEach(languageCodes, function(languageCode) {
-      languageDescriptions.push(_getLanguageDescription(languageCode));
+      languageDescriptions.push(
+        $filter('languageDescription')(languageCode));
     });
     return languageDescriptions;
   };
 }]);
+
+
+oppia.filter('languageDescription', function() {
+  var _getLanguageDescription = function(languageCode) {
+    for (var i = 0; i < constants.SUPPORTED_AUDIO_LANGUAGES.length; i++) {
+      if (constants.SUPPORTED_AUDIO_LANGUAGES[i].id === languageCode) {
+        return constants.SUPPORTED_AUDIO_LANGUAGES[i].text;
+      }
+    }
+  };
+  return function(languageCode) {
+    return _getLanguageDescription(languageCode);
+  };
+});
+
+oppia.filter('languageCode', function () {
+  var _getLanguageCode = function(languageDescription) {
+    for (var i = 0; i < constants.SUPPORTED_AUDIO_LANGUAGES.length; i++) {
+      if (constants.SUPPORTED_AUDIO_LANGUAGES[i].text
+          === languageDescription) {
+        return constants.SUPPORTED_AUDIO_LANGUAGES[i].id;
+      }
+    }
+  };
+  return function(languageDescription) {
+    return _getLanguageCode(languageDescription);
+  };
+});
